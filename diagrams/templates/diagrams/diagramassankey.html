@@ -54,10 +54,10 @@
                                     {% endfor %}
                                 </td>
                                 <td>
-                                    {{ lista.2 }}
+                                   $ {{ lista.2 }}
                                 </td>
                             <td>
-                                    {{ lista.3 }}
+                                    $ {{ lista.3 }}
                                 </td>
                                 <td>
                                     <form action="{% url 'diagrams:generateSankey' %}" method="post">{% csrf_token %}
@@ -65,7 +65,9 @@
                                         <input type="hidden" value="{{ lista|first }}" name="diagramsID">
                                         <input type="hidden" value="{{ lista|last }}" name="referencia">
                                         <input type="hidden" value="{{ lista.1 }}" name="procesos">
+                                        <input type="hidden" value="{{ equipo }}" name="equipo">
                                         <input type="hidden" value="{{ anio }}" name="anio">
+
 
                                         <input type="submit" value="Ver Sankey" class="btn btn-warning">
                                     </form>

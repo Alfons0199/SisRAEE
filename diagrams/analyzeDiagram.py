@@ -1,3 +1,5 @@
+from DataBase.DataBaseQuery import getTodosProcesos
+
 
 def sequenceProcess(diagramaArray,anioInicial, anioFinal):
 
@@ -35,7 +37,7 @@ def sequenceProcess(diagramaArray,anioInicial, anioFinal):
 def nombresListaProcesos(listaProcesosTotal,nombresProcesos,inversion,optimal_npv,anioInicial, anioFinal):
 
     listanombreprocesosTotal=[]
-
+    cont = 1
     for listaProcesos in listaProcesosTotal:
         listanombreprocesos = []
         num = 1
@@ -49,11 +51,12 @@ def nombresListaProcesos(listaProcesosTotal,nombresProcesos,inversion,optimal_np
                 else:
                     auxNombre.append(str(''))
             aux.append(auxNombre)
-            aux.append(inversion[num-1])
-            aux.append(round(float(optimal_npv[num - 1]),2))
+            aux.append(inversion[num-1][0])
+            aux.append(round(float(inversion[num-1][cont]),2))#(round(float(optimal_npv[num - 1]),2))
             aux.append(listaP[len(listaP)-1])
             listanombreprocesos.append(aux)
             num=num+1
+        cont=cont+1
         listanombreprocesosTotal.append(listanombreprocesos)
     return listanombreprocesosTotal
 
@@ -86,6 +89,7 @@ def parametrosSankey(materiales,salidaProceso,id):
                        " Densities_1,09_lower", " Densities_1,15_upper",
                        " Densities_1,55_lower", " Densities_1,095_upper",
                        " Densities_1,145_lower", "Proceso Densities_1,185_lower"]
+    nombresProcesos = getTodosProcesos()
     idprocesos = []
     colorNodo = []
     colorLink = []
@@ -104,7 +108,7 @@ def parametrosSankey(materiales,salidaProceso,id):
             masas = fila[len(fila) - 1]
             masaTotalEntrada =sumarLista(masas)
             for n in range(0,len(materiales)):
-                labelNodo.append(str(materiales[n]) + " " + str(masas[n]) + "Tn")
+                labelNodo.append(str(materiales[n]) + " " + str(round(masas[n],2)) + "Tn")
                 colorNodo.append(str(listaColorNodo[n]))
             materiales.append("OTROS")
         else:

@@ -33,16 +33,21 @@ def getListasCalculos(idprocesocalculado):
     best_profit_vector=[]
     optimal_npv_vector=[]
     optimal_intermediate_outputs=[]
+    cont=1
     for best_profit in listaProcesoSeparacion:
         aux=[]
         aux.append(float(best_profit.inversion))
-        best_profit_vector.append(aux)
-        aux = []
-        aux.append(float(best_profit.valorneto))
+
+        #aux.append(float(best_profit.valorneto))
         optimal_npv_vector.append(float(best_profit.valorneto))
         condicion_in=[]
         for procesoSeparacionid in procesoSeparacionId:
             condicion_in.append(procesoSeparacionid['idprocesosseparacionid'])
+        listaValGanancia=ProcesoSeparacion.objects.values('valorneto').filter(idprocesosseparacionid__in = condicion_in,secuenciaprocesoseparacion=best_profit.secuenciaprocesoseparacion).order_by('idprocesosseparacionid')
+        for val in listaValGanancia:
+            aux.append(float(val['valorneto']))
+        best_profit_vector.append(aux)
+
         lista=ProcesoSeparacion.objects.values('idprocesosseparacion').filter(idprocesosseparacionid__in = condicion_in,secuenciaprocesoseparacion=best_profit.secuenciaprocesoseparacion).order_by('idprocesosseparacionid')
         condicion_in=[]
         for n in lista:

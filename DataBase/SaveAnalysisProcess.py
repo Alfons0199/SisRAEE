@@ -26,7 +26,7 @@ def saveAnalysis(procesoCalculado,start_year, end_year, best_combi_vector, best_
 
                 secuenciaTupla = 1
                 ps = ProcesoSeparacion(idprocesosseparacionid=psid, secuenciaprocesoseparacion=secuencia,
-                                       inversion=mejorBeneficio[0], valorneto=optimal_npv_vector[indice])
+                                       inversion=mejorBeneficio[0], valorneto=mejorBeneficio[m+1])
                 ps.save()
 
                 secuencia = secuencia + 1

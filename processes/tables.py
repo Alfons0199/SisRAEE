@@ -7,6 +7,6 @@ class MaterialPrecioTable(tables.Table):
 
     class Meta:
         model = MaterialPrecio
-        fields=['anio','idmaterial','precioreventa']
+        fields=['idmaterial','precioreventa']
         template_name = 'django_tables2/bootstrap.html'
 

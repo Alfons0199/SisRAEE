@@ -65,7 +65,7 @@ class MaterialPrecio(models.Model):
     idmaterialprecio = models.AutoField(db_column='IDMATERIALPRECIO', primary_key=True,verbose_name='Cod')
     anio = models.ForeignKey('AnioPrecio', models.DO_NOTHING, db_column='ANIOPRECIO',verbose_name='Año')
     idmaterial = models.ForeignKey('Material', models.DO_NOTHING, db_column='IDMATERIAL',verbose_name='Material')
-    precioreventa = models.DecimalField(db_column='PRECIOREVENTA', max_digits=50, decimal_places=2,verbose_name='Precio Venta €')
+    precioreventa = models.DecimalField(db_column='PRECIOREVENTA', max_digits=50, decimal_places=2,verbose_name='Precio Venta $')
 
     class Meta:
         managed = True

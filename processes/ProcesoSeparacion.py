@@ -134,7 +134,6 @@ def getfunc_separation(idequipo, processes, process_param, resale_price, input_d
     global numeroMateriales,impuerezas,efectoCoctel
     numeroMateriales = listMaterialesEqui
     impuerezas = getImpuerezasMatriz(1)
-    print(impuerezas)
     efectoCoctel  = getCoctelMatriz(2)
     combinacionMateriels = []  # combination_plastics = []
     combinacionProcesos = []  # combination_processes = []
@@ -1428,9 +1427,8 @@ def func_revenues(total_input, idx_target, initial_mass, revenue, cost, resale_p
                 switch_index = 0
 
                 for j in range(len(input)):  # range all the plastics
-                    print(impurity)
-                    print(impurity[(num_plastics + 1) * i + idx_target][j])
-                    if 100 * input[j] / mass <= impurity[(num_plastics + 1) * i + idx_target][j]:  # check if each plastic is below the maximum acceptable fraction
+                    if 100 * input[j] / mass <= impurity[(num_plastics + 1) * i + idx_target][
+                        j]:  # check if each plastic is below the maximum acceptable fraction
                         pass
                     else:  # if not, the second step is tried
                         purity_index = i + 1

@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 
 from DataBase.DataBaseQuery import getNombresMaterialesEquipoNombre, getTodosProcesos
@@ -11,9 +12,9 @@ nombresProcesos=["XRF_Brominate","XRF_Phosphorous","XRT_FR","LIBS","Densities_1,
 def resultProcess(request,best_profit,optimal_npv,optimal_intermediate_outputs,nombreEquipo,anioInicial, anioFinal):
     global nombresProcesos,materiales
     request.session['matrizprocesos'] = optimal_intermediate_outputs
-    #nombresProcesos = getTodosProcesos()
+    nombresProcesos = getTodosProcesos()
     materiales= getNombresMaterialesEquipoNombre(nombreEquipo)
-    inversion = vectorInvestment(best_profit)
+    inversion = best_profit#vectorInvestment(best_profit)
     resultado=sequenceProcess(optimal_intermediate_outputs,anioInicial, anioFinal)
     resultadoNombre=nombresListaProcesos(resultado,nombresProcesos,inversion,optimal_npv,anioInicial, anioFinal)
 
@@ -35,7 +36,7 @@ def generateSankey(request):
     colorLink = []
     labelLink = []
     listaTotal=request.session['matrizprocesos']
-
+    nombresProcesos = getTodosProcesos()
     materiales = ["ABS", "HIPS", "PC/ABS PFr", "HIPPS/PPE PFr", "ABS/PMMA", "HIPS BFr", "ABS BFr"]
 
     idProcess=0
@@ -44,6 +45,7 @@ def generateSankey(request):
             idProcess = int(request.POST.get('diagramsID'))
             referencia = int(request.POST.get('referencia'))
             procesos = (request.POST.get('procesos'))
+            equipo=(request.POST.get('equipo'))
             aux=procesos.split("'")
             procesos=''
             for proc in aux:
@@ -61,7 +63,8 @@ def generateSankey(request):
 
     args = {
         'colorNodo': colorNodo, 'labelNodo': labelNodo, 'source': source, 'values': values, 'target': target,
-        'colorLink': colorLink, 'labelLink': labelLink, 'anio': anioCalculo,'idProcesos':idProcess,'procesos':procesos
+        'colorLink': colorLink, 'labelLink': labelLink, 'anio': anioCalculo,'idProcesos':idProcess,'procesos':procesos,
+        'equipo':equipo
     }
     print(colorNodo)
     print(labelNodo)
@@ -70,7 +73,7 @@ def generateSankey(request):
     print(target)
     print(colorLink)
     print(labelLink)
-
+    print(idProcess)
 
     return render(request,'diagrams/sankey.html',args)
 
@@ -89,3 +92,7 @@ def vectorInvestment(vector):
             vectorInversion.append(list[0]*(-1))
 
     return vectorInversion
+
+def reporteTablaDiagrama(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="ResultadoDiagrama.pdf"'

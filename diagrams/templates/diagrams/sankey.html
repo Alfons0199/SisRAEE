@@ -10,12 +10,9 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Diagrama
-                    <small>SANKEY</small>
+                    Diagrama SANKEY
+                    <small>{{ procesos|safe }}</small>
                 </h1>
-                <ol class="breadcrumb">
-                    <li class="active"><i class="fa fa-dashboard"></i> Inicio</li>
-                </ol>
             </section>
 
             <script src="/static/diagrams/plotlyjs-bundle.js"></script>
@@ -38,18 +35,18 @@
                                     y: [0, 1]
                                 },
                                 orientation: "h",
-                                valueformat: ".0f",
-                                valuesuffix: "TWh",
+                                valueformat: " #,###.0f ",
+                                valuesuffix: "t",
                                 node: {
                                     pad: 15,
-                                    thickness: 15,
+                                    thickness: 30,
                                     line: {
                                         color: "black",
                                         width: 0.5
                                     },
                                     label: {{ labelNodo|safe }},
                                     color: {{ colorNodo|safe }},
-                                    width:[10,20,20,50,10,20,20,50,10,20,20,50,10,20,20,50]
+                                    //width:[10,20,20,50,10,20,20,50,10,20,20,50,10,20,20,50]
                                 },
                                 link: {
                                     color:{{ colorLink|safe }},
@@ -63,7 +60,7 @@
                             var data = [data]
 
                             var layout = {
-                                title: " {{ procesos|safe }} {{ anio|safe }}",
+                                title: "{{ equipo|safe }} {{ anio|safe }}",
                                 width: 1118,
                                 height: 772,
                                 font: {

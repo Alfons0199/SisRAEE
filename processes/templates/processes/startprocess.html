@@ -33,21 +33,19 @@
                     </h3>
 
                     {% csrf_token %}
-                    <input id="id_todos" name="something" type="checkbox">
-                    <label>Todos</label>
 
                     <div class="col-xs-4 checkbox" checked>
+                        <input id="id_todos" name="something" type="checkbox">
+                        <b>Seleccionar Todos</b>
                         {% csrf_token %}
                         <FONT SIZE=2>{{ form.idprocesos }}</FONT>
-
-
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="row">
                         <h3>
-                            <small><label class="col-xs-3 control-label">AEE: </label></small>
+                            <small><label class="col-xs-3 control-label">Aparato eléctrico o eléctronico (AEE): </label></small>
                         </h3>
                         <div class="col-xs-2 selectContainer">
                             {% csrf_token %}
