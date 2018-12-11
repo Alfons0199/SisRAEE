@@ -1,0 +1,201 @@
+{% extends "processes/base-processes.html" %}
+{% block title %}Proceso{% endblock title %}
+{% block content %}
+    {% block processes %}script
+        {% include "base/nav.html" %}
+        <style>
+            hr {
+                display: block;
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+                margin-left: auto;
+                margin-right: auto;
+                border-style: inset;
+                border-width: 2px;
+            }
+        </style>
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    Cálculo
+                    <small>PROCESOS</small>
+                </h1>
+            </section>
+            <hr>
+            <form id="processesForm" method="post" class="form-horizontal"
+                  data-equipo-ent-url="{% url 'ajax_load_EquipoEntrada' %}"
+                  data-equipo-sal-url="{% url 'ajax_load_EquipoFinal' %}"
+                  data-anioprecio-tbl-url="{% url 'ajax_load_TablaPrecio' %}">
+                <div class="form-group">
+
+                    <h3>
+                        <small><label class="col-xs-3 control-label">Procesos: </label></small>
+                    </h3>
+
+                    {% csrf_token %}
+                    <input id="id_todos" name="something" type="checkbox">
+                    <label>Todos</label>
+
+                    <div class="col-xs-4 checkbox" checked>
+                        {% csrf_token %}
+                        <FONT SIZE=2>{{ form.idprocesos }}</FONT>
+
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <h3>
+                            <small><label class="col-xs-3 control-label">AEE: </label></small>
+                        </h3>
+                        <div class="col-xs-2 selectContainer">
+                            {% csrf_token %}
+                            {{ form.idequipo }}
+                        </div>
+                        <div class="col-md-5"></div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <div class="row">
+
+                        <h3>
+                            <small><label class="col-xs-3 control-label">Año Precio Reventa: </label></small>
+                        </h3>
+
+                        <div class="col-xs-2 selectContainer">
+                            {% csrf_token %}
+                            {{ form.idanioprecio }}
+                        </div>
+
+                        <div id="id_tabla"  class="col-md-5">
+                            {% load django_tables2 %}
+                            {% render_table table %}
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <h3>
+                            <small><label class="col-xs-3 control-label">Año Inicial: </label></small>
+                        </h3>
+                        <div class="col-xs-2 selectContainer">
+                            {% csrf_token %}
+                            {{ form.idequipoentradainicio }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <h3>
+                            <small><label class="col-xs-3 control-label">Año Final: </label></small>
+                        </h3>
+                        <div class="col-xs-2 selectContainer">
+                            {% csrf_token %}
+                            {{ form.idequipoentradafinal }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-xs-5 col-xs-offset-3">
+                        <input type="submit" value="Iniciar Proceso" class="btn btn-warning">
+                    </div>
+                </div>
+
+                {% if form.errors %}
+                    <div class="alert alert-error">
+                        <!--<h4>Error</h4>-->
+                        <ul>
+                            {% for field in form %}
+                                {% if field.errors %}
+                                    {% for error in field.errors %}
+                                        <a href="#id_{{ field.name }}" class="error">{{ error|escape }}</a><br>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                        {% if form.non_field_errors %}
+                            {{ form.non_field_errors }}
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+            </form>
+
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+        <script type="text/javascript">
+            $("#id_idequipo").change(function () {
+                var url = $("#processesForm").attr("data-equipo-ent-url");
+                var equipoId = $(this).val();
+                $.ajax({
+                    url: url,
+                    data: {
+                        'idequipo': equipoId
+                    },
+                    success: function (data) {
+                        $("#id_idequipoentradainicio").html(data);
+
+                    }
+                });
+            });
+
+            $("#id_idequipoentradainicio").change(function () {
+                var url = $("#processesForm").attr("data-equipo-sal-url");
+                var idequipoentrada = $(this).val();
+                $.ajax({
+                    url: url,
+                    data: {
+                        'idequipoentrada': idequipoentrada
+                    },
+                    success: function (data) {
+                        $("#id_idequipoentradafinal").html(data);
+                    }
+                });
+            });
+
+            $("#id_idanioprecio").change(function () {
+                var url = $("#processesForm").attr("data-anioprecio-tbl-url");
+                var anio = $(this).val();
+                $.ajax({
+                    url: url,
+                    data: {
+                        'anio': anio
+                    },
+                    success: function (data) {
+                        $("#id_tabla").html(data);
+                    }
+                });
+            });
+
+            $("#id_idprocesos").change(function () {
+
+                var checkBox = document.getElementById("id_todos");
+                if (checkBox.checked) {
+                    checkBox.checked = false;
+                }
+
+            });
+
+            $("#id_todos").change(function () {
+                if (this.checked) {
+                    var checkP = document.getElementById("id_idprocesos")
+                    for (var i = 0; i < checkP.childElementCount; i++) {
+                        $("#id_idprocesos_" + i).prop("checked", true);
+                    }
+
+
+                }
+            });
+        </script>
+    {% endblock %}
+{% endblock %}

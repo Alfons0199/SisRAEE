@@ -1,0 +1,40 @@
+{% extends "processes/base-processes.html" %}
+{% block title %}Proceso{% endblock title %}
+{% block content %}
+    {% block processes %}script
+        {% include "base/nav.html" %}
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    Material
+                    <small>Nuevo</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active"><i class="fa fa-dashboard"></i> Inicio</li>
+                </ol>
+            </section>
+            <form method="post" id="materialForm" class="form-horizontal"a>
+                {% csrf_token %}
+                <div class="form-group">
+                    <h3>
+                        <small><label class="col-xs-3 control-label">Nombre: </label></small>
+                    </h3>
+                    {% csrf_token %}
+                    <div class="col-xs-2 selectContainer">
+                        {% csrf_token %}
+                        {{ form.nombre }}
+                    </div>
+
+
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-5 col-xs-offset-3">
+                        <input type="submit" value="Guardar" class="btn btn-primary">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    {% endblock %}
+{% endblock %}

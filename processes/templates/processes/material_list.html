@@ -1,0 +1,61 @@
+{% extends "processes/base-processes.html" %}
+{% block title %}Proceso{% endblock title %}
+{% block content %}
+    {% block processes %}script
+        {% include "base/nav.html" %}
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>
+                    Materiales
+
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active"><i class="fa fa-dashboard"></i> Inicio</li>
+                </ol>
+            </section>
+
+
+            <div class="container">
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th><FONT SIZE=4><b>Cod</b></font></th>
+                        <th><FONT SIZE=4><b>Nombre Material</b></font></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </br></br>
+                    <tr>
+                        <form action="{% url 'material_add' %}" method="post">{% csrf_token %}
+
+                            <input type="submit" value="Nuevo Material" class="btn btn-primary">
+                        </form>
+                    </tr>
+                    {% for material in materiales %}
+
+                        <tr>
+                            <td> {{ material.idmaterial }} </td>
+                            <td> {{ material.nombre }} </td>
+
+                            <td>
+                                {% comment %}<a href="{% url 'material_update' 0 %}">Modificar</a>{% endcomment %}
+                                <form action="{% url 'material_update' %}" method="post">{% csrf_token %}
+
+                                    <input type="hidden" value="{{ material.idmaterial }}" name="pk">
+
+                                    <input type="submit" value="Modificar" class="btn btn-warning">
+                                </form>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    {% endblock %}
+{% endblock %}

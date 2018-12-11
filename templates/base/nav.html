@@ -1,0 +1,113 @@
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<div class="wrapper">
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="#" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>R</b>AEE</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg">Sis<b>RAEE</b></span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+
+                        <ul class="dropdown-menu">
+                            <!-- User image -->
+                            <li class="user-header">
+                                <img src="{{ MEDIA_URL }}{{ user.avatar }}" class="img-circle" alt="User Image">
+                                <p>
+                                    Victor Vinanzaca I
+                                </p>
+                            </li>
+                            <!-- Menu Footer-->
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <!--<a href="#" class="btn btn-default btn-flat">Profile</a>-->
+                                </div>
+                                <div class="pull-right">
+                                    <a href="#" class="btn btn-default btn-flat">Salir</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Control Sidebar Toggle Button -->
+                    <!--<li>
+                      <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    </li>-->
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar user panel -->
+            <div class="user-panel">
+                <div class="pull-left image">
+                    <p></p>
+                </div>
+
+            </div>
+            <p style="color:rgb(239,238,255)"></p>
+            <!-- sidebar menu: : style can be found in sidebar.less -->
+            <ul class="sidebar-menu">
+                <li class="header">MENU</li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-laptop"></i>
+                        <span>Procesos</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/../processes/new_Process/"><i class="fa fa-circle-o"></i> Nuevo Calculo Proceso</a></li>
+                    </ul>
+                    <ul class="treeview-menu">
+                        <li><a href="{% url 'procesoCalculado-list' %}"><i class="fa fa-circle-o"></i> Procesos Calculados</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-pie-chart"></i>
+                        <span>Diagramas</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href = "{% url 'diagrams:diagramassankey' %}">Tabla de Diagramas</a></li>
+                         <!--<li><a href="../diagrams/"><i class="fa fa-circle-o"></i> SANKEY</a></li> -->
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-edit"></i>
+                        <span>Mantenimientos</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href = "{% url 'material_add' %}">Material</a></li>
+                         <!--<li><a href="../diagrams/"><i class="fa fa-circle-o"></i> SANKEY</a></li> -->
+                    </ul>
+                    <ul class="treeview-menu">
+                        <li><a href = "{% url 'material_list' %}">Lista Materiales</a></li>
+                         <!--<li><a href="../diagrams/"><i class="fa fa-circle-o"></i> SANKEY</a></li> -->
+                    </ul>
+                </li>
+
+
+                <!--    <li class="header">Alertas</li>
+                    <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Medicamentos</span></a></li>
+                    <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Compras</span></a></li>
+                    <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Ventas</span></a></li>      -->
+        </section>
+        <!-- /.sidebar -->
+    </aside>

@@ -1,0 +1,88 @@
+{% extends "diagrams/base-sankey.html" %}
+{% block title %}Sankey{% endblock title %}
+{% block content %}
+    {% include "base/nav.html" %}
+    {% block diagrama %}
+
+        <div class="wrapper">
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    Diagrama
+                    <small>SANKEY</small>
+                </h1>
+                <ol class="breadcrumb">
+                    <li class="active"><i class="fa fa-dashboard"></i> Inicio</li>
+                </ol>
+            </section>
+
+            <script src="/static/diagrams/plotlyjs-bundle.js"></script>
+
+            <!--class="content-wrapper" class="col-lg-3 col-xs-6"-->
+            <section class="content">
+                <div class="row" >
+
+                    <div id="plotly-div"></div>
+
+
+                    <script type="text/javascript">
+
+                        Plotly.d3.json('',  function(fig){
+
+                            var data = {
+                                type: "sankey",
+                                domain: {
+                                    x: [0, 1],
+                                    y: [0, 1]
+                                },
+                                orientation: "h",
+                                valueformat: ".0f",
+                                valuesuffix: "TWh",
+                                node: {
+                                    pad: 15,
+                                    thickness: 15,
+                                    line: {
+                                        color: "black",
+                                        width: 0.5
+                                    },
+                                    label: {{ labelNodo|safe }},
+                                    color: {{ colorNodo|safe }},
+                                    width:[10,20,20,50,10,20,20,50,10,20,20,50,10,20,20,50]
+                                },
+                                link: {
+                                    color:{{ colorLink|safe }},
+                                            source:{{ source|safe }},
+                                            target:{{ target|safe }},
+                                            value:{{ values|safe }},
+                                            label:{{ labelLink|safe }}
+                                }
+                            }
+
+                            var data = [data]
+
+                            var layout = {
+                                title: " {{ procesos|safe }} {{ anio|safe }}",
+                                width: 1118,
+                                height: 772,
+                                font: {
+                                    size: 11
+                                },
+                                titlefont: {
+                                        size:
+                                            20,
+                                    }
+                            }
+
+                            Plotly.plot('plotly-div', data, layout)
+                        });
+                    </script>
+
+
+                </div>
+
+            </section><!-- /.content -->
+        </div><!-- /.content-wrapper -->
+    {% endblock diagrama %}
+{% endblock content %}

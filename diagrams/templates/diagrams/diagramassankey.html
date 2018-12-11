@@ -1,0 +1,86 @@
+{% extends "diagrams/base-sankey.html" %}
+{% block title %}Sankey{% endblock title %}
+{% block content %}
+    {% include "base/nav.html" %}
+    {% block diagrama %}
+         <style>
+            hr {
+                display: block;
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+                margin-left: auto;
+                margin-right: auto;
+                border-style: inset;
+                border-width: 2px;
+            }
+        </style>
+        <div class="wrapper">
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    Resultados
+                    <small>Tabla con costos de inversión y ganancias para cada combinación de procesos calculado, para cada año
+                        correspondiente y ordenado por su mejor ganancia.
+                        Si el costo de inversión es igual a cero, corresponde que todos los materiales fueron incinerados directamente.</small>
+                </h1>
+            </section>
+            <hr>
+
+            <div class="container">
+                <h3>Equipo Tratado: {{ equipo }}</h3>
+
+                {% for resultado in resultadoTotal %}
+                    <h4>Año: {{ anio|add:forloop.counter0 }}</h4>
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th><FONT SIZE=4><b>#</b></font></th>
+                            <th><FONT SIZE=4><b>Combinación de Procesos</b></font></th>
+                            <th><FONT SIZE=4><b>Inversión</b></font></th>
+                            <th><FONT SIZE=4><b>Ganancia</b></font></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for lista in resultado %}
+                            <tr>
+                                <th scope="row"> {{ lista|first}} </th>
+                                <td>
+                                    {% for nombre in lista.1 %}
+                                        {{ nombre }}
+                                        <i class="fa fa-chevron-right"></i>
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {{ lista.2 }}
+                                </td>
+                            <td>
+                                    {{ lista.3 }}
+                                </td>
+                                <td>
+                                    <form action="{% url 'diagrams:generateSankey' %}" method="post">{% csrf_token %}
+
+                                        <input type="hidden" value="{{ lista|first }}" name="diagramsID">
+                                        <input type="hidden" value="{{ lista|last }}" name="referencia">
+                                        <input type="hidden" value="{{ lista.1 }}" name="procesos">
+                                        <input type="hidden" value="{{ anio }}" name="anio">
+
+                                        <input type="submit" value="Ver Sankey" class="btn btn-warning">
+                                    </form>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endfor %}
+
+            </div>
+
+
+        </div><!-- /.content-wrapper -->
+
+    {% endblock diagrama %}
+{% endblock content %}
