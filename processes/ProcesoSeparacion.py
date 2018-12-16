@@ -432,16 +432,16 @@ def main_combinations(processes, listaMtls):
     # # Function to delete all the combinations that do not satisfy a rule specific to one process
     print('N-x-y =', len(combination_plastics), '(Number of combinations after having removed all the duplicates)')
 
-    #final_combination_plastics=[]
-    #final_combination_processes=[]
+    final_combination_plastics=[]
+    final_combination_processes=[]
     for i in range(0, len(matrizProcessParametros)):
          if matrizProcessParametros[i][0] == 3:
              final_combination_plastics, final_combination_processes = func_individual_rule(i, combination_plastics,
                                                                                             combination_processes)
          else:
              pass
-    #final_combination_plastics, final_combination_processes = func_individual_rule(3, combination_plastics,
-    #                                                                               combination_processes)
+    final_combination_plastics, final_combination_processes = func_individual_rule(3, combination_plastics,
+                                                                                   combination_processes)
     #print('N-x-y-z =', len(
         #final_combination_plastics),
           #'(Number of combinations after having removed the combinations that do not satisfy the rule specific to a process)')
@@ -985,7 +985,7 @@ def func_group_separation(idx, total_input, input_densities, plastic_combi, proc
 
     for i in range(len(input)):  # range the different plastics present in the input
 
-        mass = yield_table[process_combi[idx]][i] * input[i]  # mass separated = yield * mass
+        mass = yield_table[process_combi.index(process_combi[idx])][i] * input[i]  # mass separated = yield * mass
 
         output_1.append(mass)  # target output
         output_2.append(input[i] - mass)  # non-target output
@@ -1097,16 +1097,16 @@ def func_density_separation(idx, total_input, input_densities, plastic_combi, pr
     for i in range(first_density_input,
                    density_separation):  # Range the densities from the first density of the input to the density of the separation
         for j in range(1, len(input) + 1):
-            current_output_1[j - 1] = current_output_1[j - 1] + densities[i][j] * yield_table[process_combi[idx]][0]
+            current_output_1[j - 1] = current_output_1[j - 1] + densities[i][j] * yield_table[process_combi.index(process_combi[idx])][0]
             current_output_2[j - 1] = current_output_2[j - 1] + densities[i][j] * (
-                    1 - yield_table[process_combi[idx]][0])  # Contains particles lighter than the density separation
+                    1 - yield_table[process_combi.index(process_combi[idx])][0])  # Contains particles lighter than the density separation
 
     for i in range(density_separation,
                    last_density_input + 1):  # Range the densities from the the density of the separation to the last density of the input
         for j in range(1, len(input) + 1):
             current_output_1[j - 1] = current_output_1[j - 1] + densities[i][j] * (
-                    1 - yield_table[process_combi[idx]][0])
-            current_output_2[j - 1] = current_output_2[j - 1] + densities[i][j] * yield_table[process_combi[idx]][
+                    1 - yield_table[process_combi.index(process_combi[idx])][0])
+            current_output_2[j - 1] = current_output_2[j - 1] + densities[i][j] * yield_table[process_combi.index(process_combi[idx])][
                 0]  # Contains particles heavier than the density separation
 
     # First and last density of each output
@@ -1243,7 +1243,7 @@ def func_individual_separation(idx, total_input, input_densities, plastic_combi,
 
     # range all the plastics of the input
     for i in range(len(input)):
-        mass = yield_table[process_combi[idx]][i] * input[i]
+        mass = yield_table[process_combi.index(process_combi[idx])][i] * input[i]
 
         output_1.append(mass)  # adds the target mass correctly identified in the target output
         output_2.append(input[i] - mass)  # adds the remaining mass wrongly identified in the non target output
