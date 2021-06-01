@@ -97,7 +97,7 @@ transitions==0.4.1
 typing==3.6.6
 ufw==0.33.post2
 unicodecsv==0.14.1
-urllib3==1.23
+urllib3==1.26.5
 urlopen==1.0.0
 wagtail-smart-selects==1.2.0
 wcwidth==0.1.7
